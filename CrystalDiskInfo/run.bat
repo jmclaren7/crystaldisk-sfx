@@ -1,5 +1,6 @@
 @echo off
 set /p executablepath=<exe.txt
+if "%executablepath%"=="" exit /b
 echo Starting %executablepath% ...
 echo.
 echo Leave this window open, closing it could cause issues with the program and will prevent cleaning of temporary files.
