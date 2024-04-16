@@ -1,19 +1,24 @@
 @echo off
-set /p executablepath=<exe.txt
-if "%executablepath%"=="" exit /b
-echo Starting %executablepath% ...
+cd
 echo.
-echo Leave this window open, closing it could cause issues with the program and will prevent cleaning of temporary files.
-"%executablepath%"
+echo Starting... Leave this window open, closing it could prevent cleaning temporary files.
+
+cd CrystalDiskMark
+DiskMark64.exe
+
 echo.
 echo Program closed.
 echo.
-echo If this window doesn't close automaticly in about 5 seconds something has gone wrong and you may need
-echo   to force close it, the themporary files are located here: (%~dp0)
+echo If this window doesn't close automaticly you may need to force close it.
 echo.
+
+REM Exit if the script isn't in %temp%
+echo %~dp0 | findstr /C:"%temp%" >nul 2>&1
+if %errorlevel%==1 ( exit /b )
+
 echo Cleaning temporary files... 
-ping 1.1.1.1 >nul
-rem rmdir /s /q "%~dp0"
+ping 127.0.0.1 -n 2 >nul
+rmdir /s /q "%~dp0"
 echo Done.
-ping 1.1.1.1 -n 1 >nul
+ping 127.0.0.1 -n 2 >nul
 exit
